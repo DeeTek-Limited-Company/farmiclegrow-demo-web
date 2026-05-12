@@ -115,22 +115,20 @@ export function AutoScrollFeatures({
                   <div
                     className={`
                     flex lg:flex-row flex-col items-start space-x-4 p-5 max-w-sm md:max-w-sm lg:max-w-2xl transition-all duration-300 rounded-2xl
-                    ${
-                      isActive
+                    ${isActive
                         ? " bg-white shadow-xl border border-slate-200 scale-[1.02]"
                         : " hover:bg-slate-100/50"
-                    }
+                      }
                   `}
                   >
                     {/* Icon */}
                     <div
                       className={`
                       p-3 hidden md:block rounded-full transition-all duration-300 shadow-sm
-                      ${
-                        isActive
+                      ${isActive
                           ? `bg-${primaryColor} text-white`
                           : `bg-slate-200/50 text-slate-500`
-                      }
+                        }
                     `}
                     >
                       <Icon size={24} />
@@ -141,11 +139,10 @@ export function AutoScrollFeatures({
                       <h3
                         className={`
                         text-xl md:mt-4 lg:mt-0 font-bold mb-2 transition-colors duration-300
-                        ${
-                          isActive
+                        ${isActive
                             ? "text-slate-900"
                             : "text-slate-500"
-                        }
+                          }
                       `}
                       >
                         {feature.title}
@@ -153,16 +150,15 @@ export function AutoScrollFeatures({
                       <p
                         className={`
                         transition-colors duration-300 text-base leading-relaxed
-                        ${
-                          isActive
+                        ${isActive
                             ? "text-slate-600"
                             : "text-slate-400"
-                        }
+                          }
                       `}
                       >
                         {feature.description}
                       </p>
-                      
+
                       {/* Progress bar container */}
                       <div className="mt-6 bg-slate-100 rounded-full h-1.5 overflow-hidden w-full">
                         {isActive && (
@@ -182,26 +178,68 @@ export function AutoScrollFeatures({
           </div>
 
           {/* Right Side - Image Display */}
-          <div className="relative order-1 max-w-xl w-full mx-auto lg:order-2 h-[400px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+          <div className="relative order-1 max-w-xl w-full mx-auto lg:order-2 h-[450px] lg:h-[650px] perspective-1000">
+            {/* Ambient Background Glow */}
+            <div className={`absolute inset-0 bg-${primaryColor}/10 blur-[100px] rounded-full scale-110 opacity-50`} />
+
             <motion.div
               key={currentFeature}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute inset-0 w-full h-full"
+              initial={{ opacity: 0, rotateY: 15, rotateX: 5, scale: 0.9 }}
+              animate={{ opacity: 1, rotateY: 0, rotateX: 0, scale: 1 }}
+              exit={{ opacity: 0, rotateY: -15, rotateX: -5, scale: 0.9 }}
+              transition={{ duration: 0.8, ease: "circOut" }}
+              className="absolute inset-0 w-full h-full z-10"
             >
-              <Image
-                className="object-cover w-full h-full"
-                src={features[currentFeature].image}
-                alt={features[currentFeature].title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-              
-              {/* Overlay for better text readability if needed in the future */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+              {/* Browser/Window Frame */}
+              <div className="w-full h-full rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-slate-200 bg-white flex flex-col">
+                {/* Window Header */}
+                <div className="h-10 bg-slate-50 border-b border-slate-100 flex items-center px-6 gap-2 shrink-0">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                  </div>
+                  <div className="mx-auto bg-slate-200/50 rounded-full h-4 w-40" />
+                </div>
+
+                {/* Content Area */}
+                <div className="flex-grow relative bg-[#050A06]">
+                  <Image
+                    className="object-contain w-full h-full p-6 transition-all duration-1000"
+                    src={features[currentFeature].image}
+                    alt={features[currentFeature].title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
+
+                  {/* Glassmorphism Overlays (Floating UI) */}
+                  <motion.div
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute top-8 right-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-2xl z-20 hidden md:block"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-white">Live Verification Active</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.7 }}
+                    className="absolute bottom-12 left-8 bg-primary/20 backdrop-blur-xl border border-primary/30 rounded-full px-5 py-2.5 shadow-2xl z-20 hidden md:block"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-white text-xs font-bold">100% Provenance Secured</span>
+                    </div>
+                  </motion.div>
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -213,7 +251,7 @@ export function AutoScrollFeatures({
 // Data wrapper component for easy importing
 export function Features() {
   const [isMounted, setIsMounted] = useState(false);
-  
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -226,8 +264,8 @@ export function Features() {
       icon: ShoppingCart,
       title: "Direct Marketplace",
       description:
-        "Connect directly with verified buyers and cut out the middlemen. Secure better profits and transparent pricing.",
-      image: "/image5.jpg",
+        "Connect directly with verified buyers and cut out middlemen. Secure better profits and transparent pricing.",
+      image: "/imgg-1.png",
     },
     {
       id: 2,
@@ -235,7 +273,7 @@ export function Features() {
       title: "End-to-End Traceability",
       description:
         "Track your produce's journey using immutable data, ensuring complete transparency and trust from seed to market.",
-      image: "/image3.jpg",
+      image: "/imgg-2.png",
     },
     {
       id: 3,
@@ -243,7 +281,7 @@ export function Features() {
       title: "Agronomist Dashboard",
       description:
         "Get real-time insights, field management tools, and expert support right at your fingertips to maximize yield.",
-      image: "/image2.jpg",
+      image: "/agro-2.jpg",
     },
   ];
 

@@ -17,6 +17,7 @@ import { MarketplacePreview } from '@/components/landing/marketplace-preview';
 import { TraceabilitySection } from '@/components/landing/traceability-section';
 import { MissionVisionSection } from '@/components/landing/mission-vision-section';
 import { DashboardPreview } from '@/components/landing/dashboard-preview';
+import { VerificationTimeline } from '@/components/landing/verification-timeline';
 import { CTASection } from '@/components/landing/cta-section';
 import { Footer } from '@/components/landing/footer';
 
@@ -61,6 +62,9 @@ export default function LandingPage() {
       <div id="traceability">
         <TraceabilitySection />
       </div>
+
+      {/* Verification Timeline */}
+      <VerificationTimeline />
 
       {/* Dashboard Preview */}
       <DashboardPreview />

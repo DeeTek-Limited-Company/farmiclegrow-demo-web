@@ -13,6 +13,36 @@ export type PublicImpactResponse = {
   sampleTraceCode: string | null;
 };
 
+export type PublicMarketplaceListing = {
+  id: string;
+  title: string;
+  category: string;
+  price: number;
+  currency: string;
+  unit: string;
+  description: string | null;
+  images: string[];
+  tags: string[];
+  isFeatured: boolean;
+  minOrderQuantity: number | null;
+  batch: {
+    batchId: string;
+    crop: string;
+    quantity: number;
+    harvestDate: string;
+  };
+  origin: {
+    community?: string;
+    district?: string;
+    region?: string;
+    cooperativeName?: string;
+  };
+};
+
+export type PublicMarketplaceResponse = {
+  listings: PublicMarketplaceListing[];
+};
+
 export type PublicTraceResponse = {
   trace: {
     code: string;
@@ -63,5 +93,14 @@ export async function fetchPublicTrace(code: string): Promise<PublicTraceRespons
   const res = await fetch(url, { next: { revalidate: 60 } }).catch(() => null);
   if (!res || !res.ok) return null;
   return (await res.json().catch(() => null)) as PublicTraceResponse | null;
+}
+
+export async function fetchMarketplaceListings(): Promise<PublicMarketplaceResponse | null> {
+  const base = getPortalBaseUrl();
+  const url = `${base.replace(/\/$/, "")}/api/public/marketplace`;
+
+  const res = await fetch(url, { next: { revalidate: 60 } }).catch(() => null);
+  if (!res || !res.ok) return null;
+  return (await res.json().catch(() => null)) as PublicMarketplaceResponse | null;
 }
 

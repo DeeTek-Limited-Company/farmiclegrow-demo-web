@@ -10,8 +10,10 @@ interface ProductProps {
   id: string;
   name: string;
   category: string;
-  price: string;
-  moq: string; // Minimum Order Quantity
+  price: string | number;
+  currency?: string;
+  unit?: string;
+  moq: string | number;
   rating: number;
   image: string;
   origin: string;
@@ -86,8 +88,14 @@ export function RetailProductCard({ product }: { product: ProductProps }) {
            <div className="flex items-center justify-between mb-6">
               <div>
                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Commercial Price</div>
-                 <div className="text-xl font-black text-primary leading-none">{product.price}</div>
-                 <div className="text-[10px] font-bold text-slate-400 mt-1 italic">MOQ: {product.moq}</div>
+                 <div className="text-xl font-black text-primary leading-none">
+                    {typeof product.price === 'number' 
+                      ? `${product.currency || '$'}${product.price.toLocaleString()} / ${product.unit || 'unit'}` 
+                      : product.price}
+                 </div>
+                 <div className="text-[10px] font-bold text-slate-400 mt-1 italic">
+                    MOQ: {typeof product.moq === 'number' ? `${product.moq} ${product.unit || 'units'}` : product.moq}
+                 </div>
               </div>
               <div className="text-right">
                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Traceability</div>

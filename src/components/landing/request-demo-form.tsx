@@ -22,8 +22,13 @@ const leadSchema = z.object({
 type LeadFormValues = z.infer<typeof leadSchema>;
 
 export function RequestDemoForm() {
+  const [mounted, setMounted] = React.useState(false);
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const form = useForm<LeadFormValues>({
     resolver: zodResolver(leadSchema),
@@ -55,6 +60,14 @@ export function RequestDemoForm() {
     setIsSubmitted(true);
   };
 
+  if (!mounted) {
+    return (
+      <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 h-[580px] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (isSubmitted) {
     return (
       <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 text-left">
@@ -85,6 +98,7 @@ export function RequestDemoForm() {
 
   return (
     <form
+      suppressHydrationWarning
       className="rounded-[2rem] border border-white/10 bg-white/5 p-8 text-left"
       onSubmit={form.handleSubmit(async (values) => {
         try {

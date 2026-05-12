@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { HydrationCleanup } from "@/components/layout/hydration-cleanup";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -40,16 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <Script id="trae-hydration-attr-cleanup" strategy="beforeInteractive">
-          {`(() => {
-  try {
-    const nodes = document.querySelectorAll('[data-trae-ref]');
-    nodes.forEach((el) => {
-      el.removeAttribute('data-trae-ref');
-    });
-  } catch {}
-})();`}
-        </Script>
+        <HydrationCleanup />
         {children}
       </body>
     </html>

@@ -1,16 +1,16 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { QrCode, MapPin, Warehouse, ShoppingCart, ShieldCheck, ArrowRight } from 'lucide-react';
+import { QrCode, MapPin, Warehouse, ShoppingCart, ShieldCheck, ArrowRight, Ship, Factory, Sprout } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const journeySteps = [
   {
     title: "The Farm Origin",
     description: "Every product starts with a verified farmer identity and GPS-tagged farm coordinates.",
-    icon: MapPin,
+    image: "/image.jpg",
     detail: "GPS: 5.6037° N, 0.1870° W",
     status: "Verified",
     color: "bg-emerald-500"
@@ -18,7 +18,7 @@ const journeySteps = [
   {
     title: "Quality Processing",
     description: "Harvesting and processing data is logged, ensuring adherence to global safety standards.",
-    icon: ShieldCheck,
+    image: "/image2.jpg",
     detail: "Batch #FG-2024-089",
     status: "Certified",
     color: "bg-blue-500"
@@ -26,115 +26,171 @@ const journeySteps = [
   {
     title: "Secure Warehousing",
     description: "Real-time inventory tracking monitors batch flow and storage conditions.",
-    icon: Warehouse,
+    image: "/image3.jpg",
     detail: "Location: Sector B-12",
     status: "Stored",
     color: "bg-amber-500"
   },
   {
-    title: "Final Delivery",
+    title: "Global Logistics",
     description: "Buyers scan a unique QR code to access the complete verified history of their produce.",
-    icon: QrCode,
-    detail: "Delivered to: Global Partner",
-    status: "Traceable",
+    image: "/image5.jpg",
+    detail: "Destination: Rotterdam",
+    status: "In Transit",
     color: "bg-primary"
   }
 ];
 
 export function TraceabilitySection() {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const pathLength = useTransform(scrollYProgress, [0.1, 0.8], [0, 1]);
+
   return (
-    <section id="traceability" className="py-32 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">
-          <div className="flex-1">
+    <section id="traceability" ref={containerRef} className="py-32 bg-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative">
+        <div className="flex flex-col lg:flex-row items-center gap-16 mb-32">
+          <div className="flex-1 text-center lg:text-left">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-bold text-primary mb-8 tracking-widest uppercase"
+              className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-black text-primary mb-8 tracking-[0.2em] uppercase"
             >
-              The USP
+              The Trust Engine
             </motion.div>
             
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tight leading-[1.1]">
-              Track Your Food From <span className="text-primary text-glow">Farm to Table</span>
+            <h2 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter leading-[1]">
+              Every Fruit Has a <span className="text-primary text-glow italic">Story.</span>
             </h2>
             
-            <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-xl">
-              We provide absolute transparency. Every product on FarmicleGrow comes with a digital footprint, ensuring you know exactly where your food comes from and how it was handled.
+            <p className="text-xl text-slate-600 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+              We bridge the gap between African soil and global tables. Our traceability engine ensures absolute transparency at every node of the supply chain.
             </p>
+
+            <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
+               <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Real-time GPS Tracking</span>
+               </div>
+               <div className="flex items-center gap-2 px-4 py-2 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Blockchain Verified</span>
+               </div>
+            </div>
           </div>
           
           <div className="flex-1 relative">
             <motion.div 
-              initial={{ opacity: 0, rotate: -5 }}
-              whileInView={{ opacity: 1, rotate: 0 }}
-              className="relative aspect-square max-w-md mx-auto"
+              initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              className="relative aspect-square max-w-lg mx-auto"
             >
-              <div className="absolute inset-0 bg-primary/5 rounded-[4rem] blur-3xl -z-10" />
-              <Link href="/trace" className="block">
-                <div className="w-full h-full bg-slate-50 border-8 border-white shadow-2xl rounded-[3rem] flex items-center justify-center p-12 group cursor-pointer overflow-hidden">
-                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                   <QrCode className="w-48 h-48 text-primary/20 group-hover:text-primary transition-all duration-700 group-hover:scale-110" />
-                   <div className="absolute bottom-8 text-center">
-                      <span className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover:text-primary transition-colors">Try Demo Trace</span>
-                   </div>
-                </div>
-              </Link>
+              <div className="absolute inset-0 bg-primary/10 rounded-[5rem] blur-[80px] -z-10 animate-pulse" />
               
-              {/* Floating Badge */}
+              <div className="w-full h-full bg-white border-8 border-slate-50 shadow-premium rounded-[4rem] flex flex-col items-center justify-center p-12 group relative overflow-hidden">
+                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                 
+                 <div className="relative mb-8">
+                    <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150 animate-pulse" />
+                    <QrCode className="w-40 h-48 text-slate-900 group-hover:text-primary transition-all duration-700 group-hover:scale-105 relative z-10" />
+                 </div>
+
+                 <div className="text-center space-y-4 relative z-10">
+                    <h4 className="text-2xl font-black text-slate-900 tracking-tight">Scan the Proof</h4>
+                    <p className="text-slate-500 text-sm font-medium max-w-[200px] mx-auto">See the journey from soil to smartphone in one click.</p>
+                    <Link href="/trace" className="inline-flex items-center gap-2 text-primary font-black uppercase tracking-widest text-xs hover:gap-3 transition-all pt-4">
+                       Launch Demo Trace <ArrowRight className="w-4 h-4" />
+                    </Link>
+                 </div>
+              </div>
+              
+              {/* Floating Verification Badge */}
               <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute -top-6 -right-6 bg-white shadow-xl rounded-2xl p-4 border border-slate-100 flex items-center gap-3"
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-8 -right-8 bg-slate-900 shadow-2xl rounded-3xl p-6 border border-white/10 flex items-center gap-4 z-20"
               >
-                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6 text-emerald-500" />
+                <div className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                  <ShieldCheck className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Status</div>
-                  <div className="text-sm font-bold text-slate-900 leading-none">100% Verified</div>
+                  <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1.5">Provenance</div>
+                  <div className="text-base font-bold text-white leading-none tracking-tight">100% Verified</div>
                 </div>
               </motion.div>
             </motion.div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-          {/* Connector Line (Desktop) */}
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-slate-100 -z-10 hidden lg:block" />
+        {/* Journey Timeline */}
+        <div className="relative pt-20">
+          {/* Animated Path */}
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-slate-100 -z-10 hidden lg:block overflow-hidden rounded-full transform -translate-y-1/2">
+            <motion.div 
+              style={{ scaleX: pathLength }}
+              className="w-full h-full bg-primary origin-left"
+            />
+          </div>
           
-          {journeySteps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group bg-white p-8 rounded-[2.5rem] border border-slate-100 hover:border-primary/20 hover:shadow-xl transition-all duration-500 flex flex-col h-full"
-            >
-              <div className={cn(
-                "w-14 h-14 rounded-2xl flex items-center justify-center mb-8 text-white shadow-lg shadow-black/5 group-hover:scale-110 transition-transform duration-500",
-                step.color
-              )}>
-                <step.icon className="w-7 h-7" />
-              </div>
-              
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-slate-900">{step.title}</h3>
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary/60 px-2 py-1 bg-primary/5 rounded-md">{step.status}</span>
-              </div>
-              
-              <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium flex-grow">
-                {step.description}
-              </p>
-              
-              <div className="pt-6 border-t border-slate-50 mt-auto">
-                <div className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1">Verified Insight</div>
-                <div className="text-xs font-bold text-slate-700 font-mono">{step.detail}</div>
-              </div>
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
+            {journeySteps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: index * 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative"
+              >
+                {/* Step Marker */}
+                <div className="hidden lg:flex absolute -top-12 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-white border-4 border-slate-100 z-10 items-center justify-center group-hover:border-primary transition-colors duration-500">
+                   <div className="w-2 h-2 rounded-full bg-slate-200 group-hover:bg-primary transition-colors" />
+                </div>
+
+                <div className="bg-white p-10 rounded-[3rem] border border-slate-100 hover:border-primary/20 shadow-sm hover:shadow-2xl transition-all duration-700 flex flex-col h-full relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-[4rem] -z-10 group-hover:bg-primary/5 transition-colors duration-700" />
+                  
+                  <div className="relative w-full aspect-video rounded-3xl overflow-hidden mb-10 group-hover:scale-[1.02] transition-transform duration-700 shadow-xl">
+                     <img 
+                       src={step.image} 
+                       alt={step.title} 
+                       className="w-full h-full object-cover"
+                     />
+                     <div className={cn("absolute inset-0 opacity-20", step.color)} />
+                  </div>
+                  
+                  <div className="flex items-center justify-between mb-5">
+                    <h3 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">{step.title}</h3>
+                  </div>
+                  
+                  <p className="text-slate-500 text-base leading-relaxed mb-8 font-medium flex-grow">
+                    {step.description}
+                  </p>
+                  
+                  <div className="pt-8 border-t border-slate-50 mt-auto">
+                    <div className="flex items-center justify-between">
+                       <div>
+                          <div className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-1.5">Node Identity</div>
+                          <div className="text-xs font-bold text-slate-800 font-mono bg-slate-50 px-2 py-1 rounded-md border border-slate-100">{step.detail}</div>
+                       </div>
+                       <span className="text-[10px] font-black uppercase tracking-widest text-primary px-3 py-1.5 bg-primary/5 rounded-full ring-1 ring-primary/10">{step.status}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

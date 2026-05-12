@@ -11,6 +11,7 @@ const steps = [
     title: 'Farmer Onboarding',
     subtitle: 'Data Collection & Profiling',
     description: 'Agronomists visit farms to register farmers, capturing GPS locations, crop types, and historical yield data to create a verified digital identity.',
+    image: '/agro-5.jpg',
     icon: UserPlus,
     color: 'bg-emerald-500/10 text-emerald-500',
     borderColor: 'border-emerald-500/20',
@@ -20,6 +21,7 @@ const steps = [
     title: 'Data Verification',
     subtitle: 'Quality & Authenticity Check',
     description: 'Our admin team reviews every submission, cross-referencing satellite data and local records to ensure 100% accuracy before approval.',
+    image: '/admin-2.jpg',
     icon: Search,
     color: 'bg-blue-500/10 text-blue-500',
     borderColor: 'border-blue-500/20',
@@ -29,6 +31,7 @@ const steps = [
     title: 'Farmer Approval',
     subtitle: 'Ecosystem Integration',
     description: 'Verified farmers are formally approved, gaining access to the FarmicleGrow dashboard where they can manage their profiles and market offers.',
+    image: '/admin-1.jpg',
     icon: CheckSquare,
     color: 'bg-amber-500/10 text-amber-500',
     borderColor: 'border-amber-500/20',
@@ -38,6 +41,7 @@ const steps = [
     title: 'Market Access',
     subtitle: 'Traceable Global Trade',
     description: 'Fully traceable produce is listed for global buyers, providing farmers with direct market links and buyers with guaranteed provenance.',
+    image: '/admin-5.jpg',
     icon: BarChart2,
     color: 'bg-primary/10 text-primary',
     borderColor: 'border-primary/20',
@@ -61,8 +65,8 @@ export function HowItWorksSection() {
           >
             Our Process
           </motion.div>
-          
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -71,8 +75,8 @@ export function HowItWorksSection() {
           >
             The Journey from <span className="text-primary">Farm to Global Market</span>
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -102,10 +106,10 @@ export function HowItWorksSection() {
               >
                 {/* Visual Step Marker (Desktop) */}
                 <div className="absolute left-1/2 -translate-x-1/2 hidden lg:flex items-center justify-center">
-                   <div className="w-12 h-12 rounded-full bg-[#050A06] border border-white/20 flex items-center justify-center z-20 group-hover:border-primary transition-colors">
-                      <span className="text-xs font-black text-white/40">{step.id}</span>
-                   </div>
-                   <div className="absolute w-20 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                  <div className="w-12 h-12 rounded-full bg-[#050A06] border border-white/20 flex items-center justify-center z-20 group-hover:border-primary transition-colors">
+                    <span className="text-xs font-black text-white/40">{step.id}</span>
+                  </div>
+                  <div className="absolute w-20 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                 </div>
 
                 {/* Content Side */}
@@ -116,52 +120,52 @@ export function HowItWorksSection() {
                   )}>
                     <step.icon className="w-8 h-8" />
                   </div>
-                  
+
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-primary font-black tracking-widest text-xs uppercase">{step.subtitle}</span>
                   </div>
-                  
+
                   <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
                     {step.title}
                   </h3>
-                  
+
                   <p className="text-slate-400 text-lg font-medium leading-relaxed max-w-md">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Placeholder/Visual Side (Desktop) */}
-                <div className="w-full lg:w-1/2 hidden lg:block">
+                {/* Visual Side */}
+                <div className="w-full lg:w-1/2 mt-8 lg:mt-0 order-first lg:order-none">
                   <div className={cn(
-                    "h-64 rounded-[2rem] border backdrop-blur-sm relative overflow-hidden group",
+                    "aspect-video rounded-[2rem] md:rounded-[2.5rem] border backdrop-blur-sm relative overflow-hidden group shadow-2xl transition-all duration-700 hover:scale-[1.02]",
                     step.borderColor,
-                    "bg-white/[0.02]"
+                    "bg-[#0a0f0b]"
                   )}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent" />
-                    
-                    {/* Abstract Grid Decor */}
-                    <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-                    
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <step.icon className="w-20 h-20 opacity-[0.05] text-white group-hover:scale-110 transition-transform duration-700" />
-                    </div>
-                    
-                    <div className="absolute bottom-8 left-8 right-8">
-                       <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            whileInView={{ width: '100%' }}
-                            transition={{ duration: 1.5, delay: 0.5 }}
-                            className="h-full bg-primary/40"
-                          />
-                       </div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent z-10 pointer-events-none" />
+
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105"
+                    />
+
+                    {/* Progress Bar Overlay */}
+                    <div className="absolute bottom-6 left-6 right-6 z-20">
+                      <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden backdrop-blur-md">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: '100%' }}
+                          transition={{ duration: 1.5, delay: 0.5 }}
+                          className="h-full bg-primary shadow-[0_0_15px_rgba(34,197,94,0.5)]"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Mobile ID Badge */}
                 <div className="lg:hidden absolute -top-4 -left-4 w-12 h-12 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shadow-xl">
-                   <span className="text-sm font-black text-primary">{step.id}</span>
+                  <span className="text-sm font-black text-primary">{step.id}</span>
                 </div>
               </motion.div>
             ))}
@@ -169,7 +173,7 @@ export function HowItWorksSection() {
         </div>
 
         {/* Bottom CTA */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -179,12 +183,12 @@ export function HowItWorksSection() {
             <h3 className="text-2xl md:text-4xl font-black text-white mb-6">Start Your Agricultural Transformation</h3>
             <p className="text-slate-400 font-medium mb-10 max-w-xl mx-auto">Whether you are a global buyer seeking reliable supply or an agronomist ready to onboard farmers, FarmicleGrow is your platform.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-               <button className="px-10 h-14 rounded-full bg-primary text-white font-black hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20">
-                  Access Portal
-               </button>
+              <button className="px-10 h-14 rounded-full bg-primary text-white font-black hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20">
+                Access Portal
+              </button>
             </div>
           </div>
-          
+
           {/* Abstract background shape for the CTA */}
           <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/10 rounded-full blur-[80px]" />
           <div className="absolute -left-20 -top-20 w-80 h-80 bg-accent/5 rounded-full blur-[80px]" />

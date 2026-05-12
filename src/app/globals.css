@@ -5,52 +5,43 @@
 
 :root {
   --background: #FFFFFF;
-  --foreground: #1A1A1A;
+  --foreground: #0F172A;
   --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
+  --card-foreground: #0F172A;
   --popover: #FFFFFF;
-  --popover-foreground: #1A1A1A;
+  --popover-foreground: #0F172A;
   --primary: #15803D;
   --primary-foreground: #FFFFFF;
   --secondary: #F0FDF4;
   --secondary-foreground: #14532D;
   --muted: #F8FAFC;
   --muted-foreground: #475569;
-  --accent: #CA8A04;
+  --accent: #F59E0B;
   --accent-foreground: #FFFFFF;
-  --destructive: #991B1B;
+  --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   --border: #E2E8F0;
   --input: #E2E8F0;
   --ring: #15803D;
   --chart-1: #15803D;
-  --chart-2: #CA8A04;
+  --chart-2: #F59E0B;
   --chart-3: #14532D;
   --chart-4: #475569;
   --chart-5: #DCFCE7;
   --radius: 1.5rem;
-  --sidebar: #1F6B2E;
+  --sidebar: #15803D;
   --sidebar-foreground: #FFFFFF;
   --sidebar-primary: #FFFFFF;
-  --sidebar-primary-foreground: #1F6B2E;
+  --sidebar-primary-foreground: #15803D;
   --sidebar-accent: rgba(255, 255, 255, 0.1);
   --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #F4A300;
+  --sidebar-ring: #F59E0B;
 
-  /* Login Component Tokens */
-  --color-bg: #101214;
-  --color-surface: #161A1D;
-  --color-muted-surface: #1D2125;
-  --color-border: #2C333A;
-  --color-text-secondary: #596773;
-  --color-text-primary: #C7D1DB;
-  --color-heading: #DEE4EA;
-  --spacing-6: 1.5rem;
-  --rounded-lg: 0.5rem;
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-  --color-text-primary-rgb: 199, 209, 219;
-  --color-bg-2: #C7D1DB;
+  /* Premium Design Tokens */
+  --color-glass: rgba(255, 255, 255, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.5);
+  --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
 }
 
 .dark {

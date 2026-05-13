@@ -32,7 +32,7 @@ function toTraceUI(fromPortal: NonNullable<Awaited<ReturnType<typeof fetchPublic
     community: t.origin.community ?? "—",
     district: t.origin.district ?? "—",
     region: t.origin.region ?? "—",
-    cooperative: t.origin.cooperativeName ?? "Verified supplier",
+    farmer: t.origin.cooperativeName ?? "Verified supplier",
   };
 
   const events = t.events.map((e, idx) => {
@@ -99,7 +99,11 @@ export default async function TracePage({ params }: { params: Promise<{ code: st
     trace = {
       ...demo,
       isLive: false,
-      harvestDate: "Oct 2023", // Default for demo
+      harvestDate: "Oct 2023",
+      events: demo.events.map(e => ({
+        ...e,
+        details: e.details.map(text => ({ label: "Detail", value: text }))
+      }))
     };
   }
 
@@ -123,7 +127,7 @@ export default async function TracePage({ params }: { params: Promise<{ code: st
             <div className="lg:col-span-1 space-y-8">
               <div className="sticky top-32">
                 <FarmerProfileCard 
-                  name={trace.origin.cooperative || trace.origin.farmer} 
+                  name={trace.origin.farmer} 
                   community={trace.origin.community} 
                   location={`${trace.origin.district}, ${trace.origin.region}`}
                 />
@@ -170,7 +174,7 @@ export default async function TracePage({ params }: { params: Promise<{ code: st
                   {trace.events.map((event, idx) => {
                     const isLast = idx === trace.events.length - 1;
                     const Icon =
-                      event.status === "verified" ? ShieldCheck :
+                      event.status === "verified" || event.status === "recorded" ? ShieldCheck :
                       event.status === "stored" ? Warehouse :
                       event.status === "in_transit" ? Truck :
                       event.status === "delivered" ? CheckCircle2 : QrCode;

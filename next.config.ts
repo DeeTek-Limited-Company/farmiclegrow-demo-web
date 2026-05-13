@@ -14,8 +14,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    allowedDevOrigins: ['ff83-154-161-103-9.ngrok-free.app', 'localhost:3000', 'localhost:3001'],
+  serverActions: {
+    allowedOrigins: ['ff83-154-161-103-9.ngrok-free.app', 'localhost:3000', 'localhost:3001'],
   },
 };
 
